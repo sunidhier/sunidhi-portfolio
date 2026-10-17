@@ -37,7 +37,7 @@ export const galleryCategories: GalleryCategory[] = [
     id: 'boeing',
     title: 'Boeing Internship',
     subtitle: 'Programmer Analyst Intern · Boeing India · Summer 2026',
-    coverEmoji: '✈️',
+    coverEmoji: '',
     coverAccent: '#00BFFF',
     coverImage: '/images/boeing/boeing-01.jpeg',
     photos: [
@@ -90,7 +90,7 @@ export const galleryCategories: GalleryCategory[] = [
     id: 'miss-g',
     title: 'Miss G — Second Runner-Up',
     subtitle: 'GSSSIETW College Pageant · 2025',
-    coverEmoji: '👑',
+    coverEmoji: '',
     coverAccent: '#A78BFA',
     coverImage: '/images/miss-g/miss-g-01.jpeg',
     photos: [
@@ -119,7 +119,7 @@ export const galleryCategories: GalleryCategory[] = [
     id: 'placement',
     title: 'Student Placement Coordinator',
     subtitle: 'GSSSIETW · 2024–Present',
-    coverEmoji: '📋',
+    coverEmoji: '',
     coverAccent: '#34D399',
     coverImage: '/images/placement/placement-01.jpeg',
     photos: [
@@ -148,7 +148,7 @@ export const galleryCategories: GalleryCategory[] = [
     id: 'club',
     title: 'Science & Adventure Club',
     subtitle: 'Treasurer · GSSSIETW · 2023–2024',
-    coverEmoji: '🔬',
+    coverEmoji: '',
     coverAccent: '#FCD34D',
     coverImage: '/images/club/club-01.jpeg',
     photos: [

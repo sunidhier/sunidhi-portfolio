@@ -32,7 +32,8 @@ export default {
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
-        display: ['Clash Display', 'Inter', 'sans-serif'],
+        display: ['Syne', 'Clash Display', 'Inter', 'sans-serif'],
+        serif: ['"Playfair Display"', 'Georgia', 'serif'],
         mono: ['JetBrains Mono', 'monospace'],
       },
       animation: {

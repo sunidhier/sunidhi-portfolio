@@ -156,7 +156,7 @@ function ProjectCard({ project, onClick }: { project: Project; onClick: () => vo
           <div className="mb-4">
             {project.metrics.slice(0, 1).map((m) => (
               <span key={m} className="text-xs text-[#00BFFF]/80 font-mono">
-                ↗ {m}
+                • {m}
               </span>
             ))}
           </div>

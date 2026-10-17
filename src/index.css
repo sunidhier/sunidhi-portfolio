@@ -139,4 +139,19 @@
     background-image: radial-gradient(circle, #1E2A42 1px, transparent 1px);
     background-size: 32px 32px;
   }
+
+  .text-stroke-subtle {
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.12);
+    color: transparent;
+  }
+
+  .text-stroke-strong {
+    -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.28);
+    color: transparent;
+  }
+
+  .text-stroke-cyan {
+    -webkit-text-stroke: 1px rgba(0, 191, 255, 0.35);
+    color: transparent;
+  }
 }

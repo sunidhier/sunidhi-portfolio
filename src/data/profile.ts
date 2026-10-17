@@ -6,7 +6,7 @@ export const profile = {
   name: 'E. R. Sunidhi',
   displayName: 'Sunidhi E. R.',
   firstName: 'Sunidhi',
-  tagline: 'AI & Software Engineer in the Making',
+  tagline: 'Aspiring Software & AI Engineer',
   bio: `I'm a Computer Science Engineering undergraduate passionate about building technology that solves real problems. My work spans AI/ML research, Python automation, and full-stack development. I completed a Minor in Artificial Intelligence with IIT Ropar and Masai School, and gained industry experience at Boeing India as a Programmer Analyst Intern.`,
   currentFocus: [
     {
@@ -46,10 +46,10 @@ export const profile = {
   educationList: [
     {
       id: 'btech',
-      level: 'B.Tech — Computer Science Engineering',
+      level: 'B.Tech, Computer Science Engineering',
       institution: 'GSSSIETW',
       detail: 'CGPA: 8.63 / 10',
-      period: '2023 – 2027 (expected)',
+      period: 'Class of 2027',
       accent: '#00BFFF',
     },
     {
@@ -57,24 +57,24 @@ export const profile = {
       level: 'Minor in Artificial Intelligence',
       institution: 'IIT Ropar with Masai School',
       detail: 'Completed 2025–2026',
-      period: '2025 – 2026',
-      accent: '#A78BFA',
+      period: 'AI Specialization',
+      accent: '#8B5CF6',
     },
     {
       id: 'puc',
       level: 'Pre-University (PUC) — PCMC',
       institution: 'Base PU College',
       detail: '81.5%',
-      period: '',   // year not provided — left blank intentionally
-      accent: '#34D399',
+      period: 'Pre-University',
+      accent: '#10B981',
     },
     {
       id: 'sslc',
-      level: 'SSLC / Class 10',
+      level: 'Secondary School (SSLC / Class 10)',
       institution: 'Kendriya Vidyalaya, Mysore',
       detail: '85.5%',
-      period: '',   // year not provided — left blank intentionally
-      accent: '#FCD34D',
+      period: 'CBSE',
+      accent: '#F59E0B',
     },
   ],
 };

@@ -1,10 +1,9 @@
-import { motion, useReducedMotion } from 'framer-motion';
-import { ArrowRight, Download, Github, Linkedin, Mail } from 'lucide-react';
+import { useState, useRef } from 'react';
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
+import { ArrowRight, Download, Github, Linkedin, Mail, Sparkles, Image as ImageIcon } from 'lucide-react';
 import { profile } from '../../data/profile';
 
-// ─── Stylised 3D-look female character illustration ─────────────────────────
-// Artistic avatar only. Not a photograph of any real person.
-// Character: confident, warm, curious, modern tech professional aesthetic.
+// ─── Stylised 3D-look female character illustration (retained as artistic alternative) ───
 function CharacterIllustration() {
   return (
     <svg
@@ -101,14 +100,10 @@ function CharacterIllustration() {
       <circle cx="230" cy="398" r="3.5" fill="#C0CCE0" opacity="0.7" />
 
       {/* ── Head ── */}
-      {/* Face */}
       <ellipse cx="230" cy="196" rx="68" ry="76" fill="url(#cSkin)" />
-      {/* Face shading — subtle contour */}
       <path d="M168 196 Q168 256 230 268 Q292 256 292 196" fill="url(#cSkinDark)" opacity="0.12" />
-      {/* Cheek warmth */}
       <ellipse cx="186" cy="216" rx="16" ry="10" fill="#F08080" opacity="0.18" />
       <ellipse cx="274" cy="216" rx="16" ry="10" fill="#F08080" opacity="0.18" />
-      {/* Forehead highlight */}
       <ellipse cx="225" cy="168" rx="28" ry="18" fill="white" opacity="0.08" />
 
       {/* ── Ears ── */}
@@ -116,137 +111,74 @@ function CharacterIllustration() {
       <ellipse cx="297" cy="200" rx="11" ry="14" fill="url(#cSkin)" />
       <ellipse cx="163" cy="200" rx="6" ry="8" fill="#E09A6A" opacity="0.35" />
       <ellipse cx="297" cy="200" rx="6" ry="8" fill="#E09A6A" opacity="0.35" />
-      {/* Small earrings */}
       <circle cx="163" cy="208" r="4" fill="#A78BFA" opacity="0.85" />
       <circle cx="297" cy="208" r="4" fill="#A78BFA" opacity="0.85" />
       <circle cx="163" cy="208" r="2" fill="white" opacity="0.5" />
       <circle cx="297" cy="208" r="2" fill="white" opacity="0.5" />
 
       {/* ── Eyes ── */}
-      {/* Eye socket shadow */}
       <ellipse cx="204" cy="198" rx="18" ry="13" fill="#C8904A" opacity="0.10" />
       <ellipse cx="256" cy="198" rx="18" ry="13" fill="#C8904A" opacity="0.10" />
-      {/* Whites */}
       <ellipse cx="204" cy="198" rx="15" ry="10.5" fill="white" />
       <ellipse cx="256" cy="198" rx="15" ry="10.5" fill="white" />
-      {/* Iris — warm brown-amber */}
       <circle cx="205" cy="199" r="8.5" fill="#4A2C0A" />
       <circle cx="257" cy="199" r="8.5" fill="#4A2C0A" />
-      {/* Iris color overlay */}
       <circle cx="205" cy="199" r="7" fill="#7B4A1E" />
       <circle cx="257" cy="199" r="7" fill="#7B4A1E" />
-      {/* Pupil */}
       <circle cx="206" cy="199" r="4.2" fill="#0D0A04" />
       <circle cx="258" cy="199" r="4.2" fill="#0D0A04" />
-      {/* Eye shine — multiple for realism */}
       <circle cx="209" cy="195" r="2.5" fill="white" opacity="0.95" />
       <circle cx="261" cy="195" r="2.5" fill="white" opacity="0.95" />
       <circle cx="203" cy="201" r="1.2" fill="white" opacity="0.4" />
       <circle cx="255" cy="201" r="1.2" fill="white" opacity="0.4" />
-      {/* Upper lashes */}
       <path d="M190 189 Q198 183 218 188" stroke="#1A0A00" strokeWidth="3" strokeLinecap="round" fill="none" />
       <path d="M242 188 Q262 183 270 189" stroke="#1A0A00" strokeWidth="3" strokeLinecap="round" fill="none" />
-      {/* Lower lash line */}
       <path d="M191 207 Q204 211 217 207" stroke="#6B3C1A" strokeWidth="1" fill="none" opacity="0.5" />
       <path d="M243 207 Q256 211 269 207" stroke="#6B3C1A" strokeWidth="1" fill="none" opacity="0.5" />
 
-      {/* ── Eyebrows — natural arched ── */}
-      <path d="M190 181 Q204 174 219 179" stroke="#2A1206" strokeWidth="3.5" strokeLinecap="round" fill="none" />
-      <path d="M241 179 Q256 174 270 181" stroke="#2A1206" strokeWidth="3.5" strokeLinecap="round" fill="none" />
-      {/* Brow fill for density */}
-      <path d="M191 181 Q204 175 218 179" stroke="#3D1F06" strokeWidth="2" strokeLinecap="round" fill="none" opacity="0.6" />
-      <path d="M242 179 Q256 175 269 181" stroke="#3D1F06" strokeWidth="2" strokeLinecap="round" fill="none" opacity="0.6" />
+      {/* ── Eyebrows ── */}
+      <path d="M188 178 Q204 168 220 174" stroke="#2D124D" strokeWidth="3.2" strokeLinecap="round" fill="none" />
+      <path d="M240 174 Q256 168 272 178" stroke="#2D124D" strokeWidth="3.2" strokeLinecap="round" fill="none" />
 
-      {/* ── Nose — subtle ── */}
-      <path d="M222 212 Q230 226 238 212" stroke="#C8784A" strokeWidth="1.8" fill="none" strokeLinecap="round" />
-      <ellipse cx="223" cy="222" rx="6" ry="3.5" fill="#C8784A" opacity="0.22" />
-      <ellipse cx="237" cy="222" rx="6" ry="3.5" fill="#C8784A" opacity="0.22" />
+      {/* ── Nose ── */}
+      <path d="M228 200 L226 226 L235 228" stroke="#C88045" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+      <ellipse cx="230" cy="229" rx="5" ry="2.5" fill="#C88045" opacity="0.35" />
 
-      {/* ── Smile — warm and genuine ── */}
-      <path d="M210 236 Q230 252 250 236" stroke="#B05A38" strokeWidth="2.5" strokeLinecap="round" fill="none" />
-      <path d="M212 238 Q230 250 248 238" fill="#E07050" opacity="0.28" />
-      {/* Lip corners — dimple hint */}
-      <circle cx="210" cy="236" r="2" fill="#C06040" opacity="0.3" />
-      <circle cx="250" cy="236" r="2" fill="#C06040" opacity="0.3" />
+      {/* ── Mouth / Smile ── */}
+      <path d="M213 243 Q230 255 247 243" stroke="#B84A5A" strokeWidth="3.2" strokeLinecap="round" fill="none" />
+      <path d="M216 244 Q230 253 244 244" fill="#E8657A" opacity="0.5" />
+      <path d="M217 244 Q230 250 243 244" fill="white" opacity="0.8" />
+      <ellipse cx="211" cy="242" rx="2" ry="2" fill="#C88045" opacity="0.4" />
+      <ellipse cx="249" cy="242" rx="2" ry="2" fill="#C88045" opacity="0.4" />
 
-      {/* ── Hair — front layer ── */}
-      {/* Top / parting crown */}
-      <path d="M168 162 Q192 118 230 114 Q268 118 292 162 Q298 138 288 112 Q264 78 230 74 Q196 78 172 112 Q162 138 168 162 Z" fill="url(#cHair)" />
-      {/* Front face-framing strands */}
-      <path d="M168 162 Q158 190 162 222 Q164 242 172 258 Q162 232 160 200 Q156 172 168 162 Z" fill="url(#cHair)" />
-      <path d="M292 162 Q302 190 298 222 Q296 242 288 258 Q298 232 300 200 Q304 172 292 162 Z" fill="url(#cHair)" />
-      {/* Long flowing hair */}
-      <path d="M162 222 Q132 330 136 450 Q143 508 158 525 Q172 488 176 408 Q180 320 174 258 Z" fill="url(#cHair)" />
-      <path d="M298 222 Q328 330 324 450 Q317 508 302 525 Q288 488 284 408 Q280 320 286 258 Z" fill="url(#cHair)" />
-      {/* Hair sheen/highlight */}
-      <path d="M200 115 Q210 140 205 170" stroke="#7C4AC8" strokeWidth="4" strokeLinecap="round" opacity="0.4" fill="none" />
-      <path d="M248 116 Q256 140 253 168" stroke="#7C4AC8" strokeWidth="3" strokeLinecap="round" opacity="0.25" fill="none" />
+      {/* ── Hair — front ── */}
+      <path d="M152 175 Q165 110 230 110 Q295 110 308 175 Q314 205 310 230 Q298 160 270 148 Q235 138 200 152 Q168 165 152 175 Z" fill="url(#cHair)" />
+      <path d="M162 170 Q180 135 220 138 Q185 145 168 180 Z" fill="#4D278A" opacity="0.5" />
+      <path d="M152 175 Q144 230 155 270 Q160 240 162 205 Z" fill="url(#cHair)" />
+      <path d="M308 175 Q316 230 305 270 Q300 240 298 205 Z" fill="url(#cHair)" />
 
-      {/* ── Left arm — slightly raised, confident pose ── */}
-      <path d="M150 330 Q120 345 106 378 Q98 400 110 418 Q124 430 138 414 Q148 392 158 362 Z" fill="url(#cSkin)" />
-      {/* Left hand — natural relaxed */}
-      <ellipse cx="110" cy="424" rx="16" ry="12" fill="url(#cSkin)" transform="rotate(-10,110,424)" />
-      {/* Fingers */}
-      <path d="M97 418 Q91 404 96 398" stroke="url(#cSkin)" strokeWidth="6" strokeLinecap="round" fill="none" />
-      <path d="M101 414 Q94 398 100 392" stroke="url(#cSkin)" strokeWidth="6" strokeLinecap="round" fill="none" />
-      <path d="M107 412 Q102 396 108 390" stroke="url(#cSkin)" strokeWidth="6" strokeLinecap="round" fill="none" />
-      <path d="M113 412 Q110 396 117 392" stroke="url(#cSkin)" strokeWidth="6" strokeLinecap="round" fill="none" />
-      <path d="M120 415 Q119 400 126 398" stroke="url(#cSkin)" strokeWidth="6" strokeLinecap="round" fill="none" />
+      {/* ── Glasses ── */}
+      <rect x="186" y="186" width="36" height="26" rx="8" stroke="#00BFFF" strokeWidth="2.5" fill="rgba(0,191,255,0.06)" />
+      <rect x="238" y="186" width="36" height="26" rx="8" stroke="#00BFFF" strokeWidth="2.5" fill="rgba(0,191,255,0.06)" />
+      <path d="M222 196 Q230 193 238 196" stroke="#00BFFF" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+      <path d="M186 195 L168 192" stroke="#00BFFF" strokeWidth="2" strokeLinecap="round" />
+      <path d="M274 195 L292 192" stroke="#00BFFF" strokeWidth="2" strokeLinecap="round" />
+      <path d="M190 190 L204 190" stroke="white" strokeWidth="1.5" strokeLinecap="round" opacity="0.6" />
+      <path d="M242 190 L256 190" stroke="white" strokeWidth="1.5" strokeLinecap="round" opacity="0.6" />
 
-      {/* ── Right arm — holding laptop ── */}
-      <path d="M310 330 Q340 345 354 378 Q362 400 350 418 Q336 430 322 414 Q312 392 302 362 Z" fill="url(#cSkin)" />
-
-      {/* ── Laptop ── */}
-      <g transform="translate(314,375) rotate(-6)">
-        {/* Screen lid */}
-        <rect x="0" y="-68" width="108" height="70" rx="6" fill="#1A2B44" />
-        <rect x="3" y="-65" width="102" height="64" rx="4" fill="url(#cScreen)" />
+      {/* ── Laptop in hands ── */}
+      <g transform="translate(155, 410)">
+        <path d="M15 50 L135 50 L145 75 L5 75 Z" fill="#1E2A42" stroke="#2D3F5E" strokeWidth="1.5" />
+        <rect x="20" y="8" width="110" height="44" rx="4" fill="url(#cScreen)" stroke="#00BFFF" strokeWidth="1.5" />
         {/* Code lines on screen */}
-        <rect x="8" y="-60" width="56" height="3.5" rx="1.75" fill="#00BFFF" opacity="0.75" />
-        <rect x="8" y="-53" width="40" height="3.5" rx="1.75" fill="#A78BFA" opacity="0.65" />
-        <rect x="8" y="-46" width="66" height="3.5" rx="1.75" fill="#00BFFF" opacity="0.55" />
-        <rect x="8" y="-39" width="34" height="3.5" rx="1.75" fill="#34D399" opacity="0.65" />
-        <rect x="8" y="-32" width="58" height="3.5" rx="1.75" fill="#A78BFA" opacity="0.5" />
-        <rect x="8" y="-25" width="48" height="3.5" rx="1.75" fill="#00BFFF" opacity="0.45" />
-        <rect x="8" y="-18" width="44" height="3.5" rx="1.75" fill="#FCD34D" opacity="0.45" />
-        {/* Screen glare */}
-        <path d="M4 -65 L28 -65 L4 -38 Z" fill="white" opacity="0.04" />
-        {/* Screen edge glow */}
-        <rect x="3" y="-65" width="102" height="2" rx="1" fill="#00BFFF" opacity="0.15" />
-        {/* Laptop base */}
-        <rect x="-5" y="2" width="118" height="10" rx="4" fill="#243552" />
-        {/* Touchpad */}
-        <rect x="36" y="5" width="40" height="5" rx="2.5" fill="#1A2B44" opacity="0.7" />
-        {/* Hinge */}
-        <rect x="44" y="-1" width="20" height="5" rx="2.5" fill="#1A2B44" />
-      </g>
-
-      {/* ── Floating tech orbs ── */}
-      {/* Python */}
-      <g opacity="0.9">
-        <circle cx="88" cy="265" r="22" fill="#0D1528" stroke="#00BFFF" strokeWidth="1.5" />
-        <circle cx="88" cy="265" r="18" fill="#0D1528" />
-        <text x="88" y="270" textAnchor="middle" fill="#00BFFF" fontSize="11" fontFamily="monospace" fontWeight="700">Py</text>
-      </g>
-      {/* AI */}
-      <g opacity="0.88">
-        <circle cx="374" cy="248" r="22" fill="#0D1528" stroke="#A78BFA" strokeWidth="1.5" />
-        <text x="374" y="254" textAnchor="middle" fill="#A78BFA" fontSize="11" fontFamily="monospace" fontWeight="700">AI</text>
-      </g>
-      {/* ML */}
-      <g opacity="0.82">
-        <circle cx="76" cy="358" r="18" fill="#0D1528" stroke="#34D399" strokeWidth="1.4" />
-        <text x="76" y="363" textAnchor="middle" fill="#34D399" fontSize="10" fontFamily="monospace" fontWeight="700">ML</text>
-      </g>
-      {/* data brackets */}
-      <g opacity="0.78">
-        <circle cx="380" cy="345" r="18" fill="#0D1528" stroke="#FCD34D" strokeWidth="1.4" />
-        <text x="380" y="350" textAnchor="middle" fill="#FCD34D" fontSize="13" fontFamily="monospace" fontWeight="700">{'<>'}</text>
-      </g>
-      {/* star accent */}
-      <g opacity="0.7">
-        <circle cx="100" cy="450" r="14" fill="#0D1528" stroke="#F472B6" strokeWidth="1.2" />
-        <text x="100" y="455" textAnchor="middle" fill="#F472B6" fontSize="13" fontFamily="monospace">✦</text>
+        <line x1="28" y1="18" x2="60" y2="18" stroke="#00BFFF" strokeWidth="2" strokeLinecap="round" opacity="0.8" />
+        <line x1="64" y1="18" x2="85" y2="18" stroke="#A78BFA" strokeWidth="2" strokeLinecap="round" opacity="0.8" />
+        <line x1="34" y1="25" x2="75" y2="25" stroke="#34D399" strokeWidth="1.8" strokeLinecap="round" opacity="0.7" />
+        <line x1="34" y1="32" x2="90" y2="32" stroke="#CBD5E1" strokeWidth="1.8" strokeLinecap="round" opacity="0.6" />
+        <line x1="40" y1="39" x2="70" y2="39" stroke="#00BFFF" strokeWidth="1.8" strokeLinecap="round" opacity="0.7" />
+        <circle cx="75" cy="62" r="3" fill="#00BFFF" opacity="0.6" />
+        <ellipse cx="22" cy="58" rx="10" ry="7" fill="url(#cSkin)" />
+        <ellipse cx="128" cy="58" rx="10" ry="7" fill="url(#cSkin)" />
       </g>
 
       {/* ── Ground shadow ── */}
@@ -256,108 +188,198 @@ function CharacterIllustration() {
   );
 }
 
-// ─── Main Hero ────────────────────────────────────────────────────────────────
+// ─── Main Hero Section ────────────────────────────────────────────────────────
 export default function Hero() {
+  const containerRef = useRef<HTMLElement>(null);
   const shouldReduce = useReducedMotion();
+  const [showIllustration, setShowIllustration] = useState(false);
+  const [photoError, setPhotoError] = useState(false);
 
-  const fl = (d = 0) => ({
-    initial: { opacity: 0, x: -24 },
-    animate: { opacity: 1, x: 0 },
-    transition: { duration: 0.6, delay: d, ease: 'easeOut' },
+  // Scroll-driven parallax progress for Hero
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start start', 'end start'],
   });
-  const fr = (d = 0) => ({
-    initial: { opacity: 0, x: 24 },
-    animate: { opacity: 1, x: 0 },
-    transition: { duration: 0.6, delay: d, ease: 'easeOut' },
+
+  // Vertical scroll motion for the large "PORTFOLIO" title
+  const portfolioY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    shouldReduce ? ['0%', '0%'] : ['0%', '42%']
+  );
+
+  const portfolioOpacity = useTransform(scrollYProgress, [0, 0.8], [0.85, 0.15]);
+
+  // Subtle parallax for portrait image
+  const imageY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    shouldReduce ? ['0%', '0%'] : ['0%', '-12%']
+  );
+
+  // Staggered reveal animations
+  const fadeUp = (delay = 0) => ({
+    initial: { opacity: 0, y: shouldReduce ? 0 : 28 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] },
   });
 
   return (
     <section
+      ref={containerRef}
       id="home"
-      className="relative min-h-screen flex items-center overflow-hidden"
-      aria-label="Introduction"
+      className="relative min-h-screen flex flex-col justify-between overflow-hidden bg-[#080B14] pt-24 pb-12 lg:pb-16"
+      aria-label="Introduction and Hero"
     >
-      {/* Background */}
-      <div className="absolute inset-0 grid-dots opacity-[0.15]" aria-hidden="true" />
+      {/* ── Background Subtle Monochrome Grids & Glows ── */}
+      <div className="absolute inset-0 grid-dots opacity-[0.10]" aria-hidden="true" />
       <div className="absolute inset-0 bg-gradient-to-b from-[#080B14] via-transparent to-[#080B14]" aria-hidden="true" />
+
+      {/* Ambient futuristic Cyan & Violet radial lighting */}
       <div
-        className="absolute left-0 top-1/3 w-[480px] h-[480px] pointer-events-none"
-        style={{ background: 'radial-gradient(circle, rgba(0,191,255,0.06) 0%, transparent 70%)', filter: 'blur(50px)' }}
+        className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[600px] sm:w-[850px] sm:h-[850px] pointer-events-none -z-10"
+        style={{
+          background:
+            'radial-gradient(circle at 50% 50%, rgba(0, 191, 255, 0.07) 0%, rgba(139, 92, 246, 0.06) 45%, transparent 70%)',
+          filter: 'blur(70px)',
+        }}
         aria-hidden="true"
       />
-      <div
-        className="absolute right-0 top-1/4 w-[480px] h-[480px] pointer-events-none"
-        style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.07) 0%, transparent 70%)', filter: 'blur(50px)' }}
+
+      {/* ── LAYER 1 (Deep Layer): Large "PORTFOLIO" Title moving vertically on scroll ── */}
+      <motion.div
+        style={{ y: portfolioY, opacity: portfolioOpacity }}
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full select-none pointer-events-none z-0 flex items-center justify-center overflow-hidden"
         aria-hidden="true"
-      />
+      >
+        <span
+          className="font-display font-extrabold uppercase tracking-[-0.05em] text-stroke-subtle text-[22vw] sm:text-[18vw] lg:text-[16vw] leading-none whitespace-nowrap opacity-60 transition-opacity"
+          style={{
+            letterSpacing: '0.04em',
+            textShadow: '0 0 80px rgba(0, 191, 255, 0.08)',
+          }}
+        >
+          PORTFOLIO
+        </span>
+      </motion.div>
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-10">
-        {/* Three-column grid on desktop: left | character | right */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px_1fr] gap-8 lg:gap-6 items-center min-h-[calc(100vh-8rem)]">
+      {/* ── Top Status Bar ── */}
+      <div className="relative z-30 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mb-6">
+        <motion.div
+          {...fadeUp(0.1)}
+          className="flex items-center justify-between gap-3 border-b border-white/[0.08] pb-4 text-xs font-mono"
+        >
+          <div className="flex items-center gap-2">
+            <span className="inline-flex items-center gap-2 text-[#00BFFF] bg-[#00BFFF]/5 px-3 py-1 rounded-full border border-[#00BFFF]/20 text-[11px] font-mono tracking-wider uppercase">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#00BFFF] animate-pulse" />
+              AVAILABLE FOR OPPORTUNITIES
+            </span>
+          </div>
 
-          {/* ══ LEFT ══ */}
-          <div className="flex flex-col gap-5 order-2 lg:order-1">
+          {/* Visual style switch (Photo vs Illustration) */}
+          <button
+            onClick={() => setShowIllustration(!showIllustration)}
+            className="inline-flex items-center gap-1.5 text-[11px] font-mono text-slate-400 hover:text-white border border-white/10 hover:border-[#00BFFF]/40 px-3 py-1 rounded-full transition-colors bg-[#111827]/40"
+            title="Toggle between monochrome photography and vector illustration"
+          >
+            {showIllustration ? (
+              <>
+                <ImageIcon size={12} className="text-[#00BFFF]" />
+                <span>Photo Mode</span>
+              </>
+            ) : (
+              <>
+                <Sparkles size={12} className="text-[#A78BFA]" />
+                <span>Art Mode</span>
+              </>
+            )}
+          </button>
+        </motion.div>
+      </div>
 
-            {/* Available badge */}
-            <motion.div {...fl(0.1)}>
-              <span className="inline-flex items-center gap-2 text-xs font-mono tracking-widest uppercase text-[#00BFFF] px-4 py-1.5 rounded-full border border-[#00BFFF]/25 bg-[#00BFFF]/5">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#00BFFF] animate-pulse" />
-                Available for opportunities
+      {/* ── MAIN COMPOSITION: Layered Typography + Monochrome Image ── */}
+      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex-1 flex items-center">
+        <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-4 items-center">
+          
+          {/* ══ LEFT & OVERLAPPING FOREGROUND (Cols 1 to 7): Editorial Typography ══ */}
+          <div className="lg:col-span-7 z-30 flex flex-col justify-center">
+            
+            {/* Editorial Category Tagline */}
+            <motion.div {...fadeUp(0.18)} className="mb-3">
+              <span className="text-xs sm:text-sm font-mono tracking-[0.25em] uppercase text-slate-400 flex items-center gap-2">
+                <span className="w-6 h-px bg-[#00BFFF]/60" />
+                Aspiring Software &amp; AI Engineer
               </span>
             </motion.div>
 
-            {/* Name — single line, responsive clamp */}
-            <motion.div {...fl(0.2)}>
-              <h1
-                className="font-bold text-white leading-none tracking-tight whitespace-nowrap"
-                style={{ fontSize: 'clamp(1.9rem, 4.2vw, 3.6rem)' }}
-              >
-                {profile.displayName ?? profile.name}
+            {/* Oversized Editorial Name: SUNIDHI E. R. */}
+            <motion.div {...fadeUp(0.25)} className="relative">
+              <h1 className="font-serif tracking-[-0.03em] uppercase text-white leading-[0.88] select-text">
+                <span className="block text-[13vw] sm:text-[9.5vw] lg:text-[5.8rem] xl:text-[6.8rem] font-light text-white drop-shadow-lg">
+                  SUNIDHI
+                </span>
+                <span className="block text-[11vw] sm:text-[8vw] lg:text-[4.8rem] xl:text-[5.6rem] font-normal italic gradient-text">
+                  E. R.
+                </span>
               </h1>
-              <p
-                className="gradient-text font-semibold mt-2 leading-tight"
-                style={{ fontSize: 'clamp(1rem, 2vw, 1.5rem)' }}
-              >
-                Computer Science Engineer | AI Enthusiast
+            </motion.div>
+
+            {/* Secondary Editorial Subheading */}
+            <motion.div {...fadeUp(0.35)} className="mt-4 sm:mt-5 max-w-xl">
+              <p className="text-slate-200 font-sans text-base sm:text-lg lg:text-xl font-light tracking-wide leading-relaxed">
+                Computer Science undergraduate actively pursuing Software Engineering and AI roles.
+              </p>
+              <p className="text-slate-400 font-sans text-xs sm:text-sm leading-relaxed mt-2.5">
+                Experienced in Python automation from my internship at <span className="text-white font-medium">Boeing India</span>, speech AI research, and an AI Minor from IIT Ropar — ready to contribute, learn, and build impactful software.
               </p>
             </motion.div>
 
-            {/* Summary — exact requested text */}
-            <motion.p
-              {...fl(0.32)}
-              className="text-slate-300 leading-relaxed max-w-lg"
-              style={{ fontSize: 'clamp(0.875rem, 1.4vw, 1rem)' }}
+            {/* Key Factual Credentials Bar */}
+            <motion.div
+              {...fadeUp(0.42)}
+              className="mt-6 flex flex-wrap items-center gap-2.5 sm:gap-3 text-xs font-mono"
             >
-              I'm a Computer Science undergraduate at GSSSIETW, passionate about building technology that
-              makes a real difference. From developing Python automation solutions during my internship at
-              Boeing India to exploring AI-powered applications and speech research, I enjoy turning complex
-              problems into practical solutions. I'm curious by nature, driven by challenges, and always
-              excited to learn, build, and explore what's next.
-            </motion.p>
+              <div className="bg-[#111827]/90 border border-white/10 hover:border-[#00BFFF]/30 px-3 py-1.5 rounded-lg text-slate-300 flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#00BFFF]" />
+                <span>Boeing Programmer Analyst Intern</span>
+              </div>
+              <div className="bg-[#111827]/90 border border-white/10 hover:border-[#8B5CF6]/30 px-3 py-1.5 rounded-lg text-slate-300 flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#8B5CF6]" />
+                <span>AI Minor · IIT Ropar × Masai</span>
+              </div>
+              <div className="bg-[#111827]/90 border border-white/10 px-3 py-1.5 rounded-lg text-slate-400">
+                <span>GSSSIETW · CGPA {profile.education.cgpa}</span>
+              </div>
+            </motion.div>
 
-            {/* CTAs */}
-            <motion.div {...fl(0.42)} className="flex flex-wrap gap-3 pt-1">
+            {/* CTAs and Direct Actions */}
+            <motion.div {...fadeUp(0.5)} className="mt-8 flex flex-wrap items-center gap-4">
               <button
                 onClick={() => document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' })}
                 className="btn-primary"
               >
-                Explore Projects
+                Explore Selected Projects
                 <ArrowRight size={16} />
               </button>
-              <a href={profile.resume} download={profile.resumeDownloadName} className="btn-outline">
+
+              <a
+                href={profile.resume}
+                download={profile.resumeDownloadName}
+                className="btn-outline"
+              >
                 <Download size={16} />
                 Download Resume
               </a>
             </motion.div>
 
-            {/* Social links */}
-            <motion.div {...fl(0.52)} className="flex items-center gap-3 pt-1">
+            {/* Social Links & Direct Contact */}
+            <motion.div {...fadeUp(0.58)} className="mt-6 flex items-center gap-3">
               <a
                 href={profile.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="GitHub"
-                className="p-2.5 rounded-xl border border-[#1E2A42] text-slate-400 hover:text-white hover:border-[#00BFFF]/40 hover:bg-[#00BFFF]/5 transition-all focus:outline-none focus:ring-2 focus:ring-[#00BFFF]"
+                aria-label="GitHub Profile"
+                className="p-2.5 rounded-xl border border-white/10 text-slate-400 hover:text-white hover:border-[#00BFFF]/40 hover:bg-[#00BFFF]/5 transition-all focus:outline-none focus:ring-2 focus:ring-[#00BFFF]"
               >
                 <Github size={18} />
               </a>
@@ -365,132 +387,120 @@ export default function Hero() {
                 href={profile.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="LinkedIn"
-                className="p-2.5 rounded-xl border border-[#1E2A42] text-slate-400 hover:text-white hover:border-[#A78BFA]/40 hover:bg-[#A78BFA]/5 transition-all focus:outline-none focus:ring-2 focus:ring-[#A78BFA]"
+                aria-label="LinkedIn Profile"
+                className="p-2.5 rounded-xl border border-white/10 text-slate-400 hover:text-white hover:border-[#A78BFA]/40 hover:bg-[#A78BFA]/5 transition-all focus:outline-none focus:ring-2 focus:ring-[#A78BFA]"
               >
                 <Linkedin size={18} />
               </a>
               <a
                 href={`mailto:${profile.email}`}
-                aria-label="Email"
-                className="p-2.5 rounded-xl border border-[#1E2A42] text-slate-400 hover:text-white hover:border-[#00BFFF]/40 hover:bg-[#00BFFF]/5 transition-all focus:outline-none focus:ring-2 focus:ring-[#00BFFF]"
+                aria-label="Send Email"
+                className="p-2.5 rounded-xl border border-white/10 text-slate-400 hover:text-white hover:border-[#00BFFF]/40 hover:bg-[#00BFFF]/5 transition-all focus:outline-none focus:ring-2 focus:ring-[#00BFFF]"
               >
                 <Mail size={18} />
               </a>
-              <span className="text-slate-600 text-xs font-mono hidden sm:inline">{profile.email}</span>
+              <span className="text-slate-500 text-xs font-mono hidden sm:inline ml-2">{profile.email}</span>
             </motion.div>
           </div>
 
-          {/* ══ CENTRE — Character ══ */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.1 }}
-            className="order-1 lg:order-2 flex items-end justify-center"
-            aria-hidden="true"
-          >
-            <div className="relative w-full max-w-[340px] lg:max-w-none" style={{ height: 'clamp(380px, 55vw, 520px)' }}>
-              {/* Pulse glow ring behind character */}
-              <motion.div
-                animate={shouldReduce ? {} : { scale: [1, 1.05, 1], opacity: [0.4, 0.7, 0.4] }}
-                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-                className="absolute inset-0 rounded-full pointer-events-none"
+          {/* ══ LAYER 2: MIDDLE LAYER (Cols 8 to 12) Monochrome Subject ══ */}
+          {/* Layered between the giant background "PORTFOLIO" title and foreground text */}
+          <div className="lg:col-span-5 relative flex items-center justify-center lg:justify-end z-20 mt-4 lg:mt-0">
+            <motion.div
+              style={{ y: imageY }}
+              initial={{ opacity: 0, scale: 0.94 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.85, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              className="relative w-full max-w-[340px] sm:max-w-[380px] lg:max-w-[420px]"
+            >
+              {/* Subtle back ambient glow */}
+              <div
+                className="absolute inset-0 rounded-2xl pointer-events-none -z-10"
                 style={{
-                  background: 'radial-gradient(ellipse at 50% 60%, rgba(0,191,255,0.13) 0%, rgba(139,92,246,0.1) 40%, transparent 70%)',
-                  filter: 'blur(24px)',
+                  background:
+                    'radial-gradient(circle at 50% 50%, rgba(0, 191, 255, 0.18) 0%, rgba(139, 92, 246, 0.14) 50%, transparent 80%)',
+                  filter: 'blur(32px)',
                 }}
               />
-              {/* Floating animation wrapper */}
-              <motion.div
-                animate={shouldReduce ? {} : { y: [0, -12, 0] }}
-                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-                className="w-full h-full"
-              >
-                <CharacterIllustration />
-              </motion.div>
-            </div>
-          </motion.div>
 
-          {/* ══ RIGHT — Identity cards ══ */}
-          <div className="flex flex-col gap-4 order-3">
+              {/* Monochromatic Portrait Frame or Vector Illustration */}
+              {!showIllustration ? (
+                <div className="relative group">
+                  {/* Architectural Asymmetrical Frame */}
+                  <div
+                    className="relative overflow-hidden rounded-2xl border border-white/15 bg-[#0D1120] aspect-[3/4] shadow-[0_20px_60px_rgba(0,0,0,0.8)]"
+                    style={{
+                      boxShadow:
+                        '0 0 0 1px rgba(255,255,255,0.08), 0 24px 60px rgba(0,0,0,0.7), 0 0 40px rgba(0,191,255,0.12)',
+                    }}
+                  >
+                    {!photoError ? (
+                      <img
+                        src={profile.profilePhoto}
+                        alt="Sunidhi E. R. — Monochrome Portrait"
+                        className="w-full h-full object-cover object-top filter grayscale contrast-[1.08] brightness-[0.96] transition-all duration-700 group-hover:scale-[1.02] group-hover:contrast-[1.12]"
+                        onError={() => setPhotoError(true)}
+                      />
+                    ) : (
+                      <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-b from-[#111827] to-[#080B14] p-6 text-center">
+                        <div className="w-20 h-20 rounded-full border border-[#00BFFF]/30 flex items-center justify-center font-serif text-3xl text-white mb-4">
+                          S
+                        </div>
+                        <p className="font-serif text-lg text-white">Sunidhi E. R.</p>
+                        <p className="text-xs font-mono text-slate-500 mt-1">Portrait Archive</p>
+                      </div>
+                    )}
 
-            {/* Identity card */}
-            <motion.div
-              {...fr(0.28)}
-              className="card-base p-4 card-hover"
-              style={{ borderColor: 'rgba(0,191,255,0.15)', boxShadow: '0 0 24px rgba(0,191,255,0.05)' }}
-            >
-              <p className="text-[10px] font-mono uppercase tracking-widest text-slate-600 mb-2">Identity</p>
-              <p className="text-white font-semibold text-sm">{profile.displayName ?? profile.name}</p>
-              <p className="text-[#00BFFF] text-xs font-mono mt-0.5">{profile.education.institution}</p>
-              <p className="text-slate-500 text-xs font-mono">{profile.education.degree.split(',')[0]}</p>
-              <div className="flex gap-2 mt-2 flex-wrap">
-                <span className="text-[10px] font-mono bg-[#1E2A42]/60 text-slate-400 px-2 py-0.5 rounded-full border border-[#1E2A42]">CGPA {profile.education.cgpa}</span>
-                <span className="text-[10px] font-mono bg-[#1E2A42]/60 text-slate-400 px-2 py-0.5 rounded-full border border-[#1E2A42]">2027</span>
-              </div>
-            </motion.div>
+                    {/* Subtle monochrome vignette & film gradient */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#080B14]/80 via-transparent to-transparent pointer-events-none" />
 
-            {/* Boeing badge */}
-            <motion.div
-              {...fr(0.38)}
-              className="card-base p-4 card-hover flex items-center gap-3"
-              style={{ borderColor: 'rgba(0,191,255,0.12)' }}
-            >
-              <div className="w-9 h-9 rounded-xl bg-[#00BFFF]/10 border border-[#00BFFF]/20 flex items-center justify-center flex-shrink-0 text-lg">✈</div>
-              <div>
-                <p className="text-white text-sm font-semibold">Boeing India</p>
-                <p className="text-slate-500 text-[11px] font-mono">Programmer Analyst Intern · 2026</p>
-              </div>
-            </motion.div>
+                    {/* Editorial corner hairline accents */}
+                    <div className="absolute top-3 left-3 w-3 h-3 border-t border-l border-white/40 pointer-events-none" />
+                    <div className="absolute top-3 right-3 w-3 h-3 border-t border-r border-white/40 pointer-events-none" />
+                    <div className="absolute bottom-3 left-3 w-3 h-3 border-b border-l border-white/40 pointer-events-none" />
+                    <div className="absolute bottom-3 right-3 w-3 h-3 border-b border-r border-white/40 pointer-events-none" />
 
-            {/* AI Minor badge */}
-            <motion.div
-              {...fr(0.46)}
-              className="card-base p-4 card-hover flex items-center gap-3"
-              style={{ borderColor: 'rgba(139,92,246,0.12)' }}
-            >
-              <div className="w-9 h-9 rounded-xl bg-[#8B5CF6]/10 border border-[#8B5CF6]/20 flex items-center justify-center flex-shrink-0 text-lg">🤖</div>
-              <div>
-                <p className="text-white text-sm font-semibold">AI Minor</p>
-                <p className="text-slate-500 text-[11px] font-mono">IIT Ropar · Masai School · 2025–26</p>
-              </div>
-            </motion.div>
-
-            {/* Currently active */}
-            <motion.div
-              {...fr(0.54)}
-              className="card-base p-4 card-hover"
-              style={{ borderColor: 'rgba(52,211,153,0.12)' }}
-            >
-              <p className="text-[10px] font-mono uppercase tracking-widest text-slate-600 mb-2.5">Currently</p>
-              <ul className="space-y-1.5">
-                {['Speech AI Research', 'AI/ML Development', 'Placement Coordinator', 'Open to Internships'].map((t, i) => (
-                  <li key={t} className="flex items-center gap-2 text-xs text-slate-300">
-                    <span className="w-1 h-1 rounded-full flex-shrink-0" style={{ background: ['#00BFFF','#A78BFA','#34D399','#FCD34D'][i] }} />
-                    {t}
-                  </li>
-                ))}
-              </ul>
+                    {/* Floating editorial caption inside photo card */}
+                    <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-[11px] font-mono text-slate-300">
+                      <span className="tracking-widest uppercase text-white/90">FIG. 01 — PORTRAIT</span>
+                      <span className="text-[#00BFFF] tracking-wider">MYS // 2026</span>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                /* Vector 3D Character Illustration Alternative */
+                <div className="relative w-full aspect-[3/4] flex items-center justify-center p-2 rounded-2xl border border-white/10 bg-[#0D1120]/60 backdrop-blur-sm">
+                  <div className="w-full h-full max-h-[460px]">
+                    <CharacterIllustration />
+                  </div>
+                </div>
+              )}
             </motion.div>
           </div>
+
         </div>
       </div>
 
-      {/* Scroll cue */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2 }}
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 pointer-events-none"
-        aria-hidden="true"
-      >
-        <span className="text-[9px] font-mono tracking-[0.2em] uppercase text-slate-700">scroll</span>
+      {/* ── Scroll Indicator ── */}
+      <div className="relative z-30 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mt-6">
         <motion.div
-          animate={shouldReduce ? {} : { y: [0, 6, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-          className="w-px h-5 bg-gradient-to-b from-slate-700 to-transparent"
-        />
-      </motion.div>
+          {...fadeUp(0.6)}
+          className="flex items-center justify-center border-t border-white/[0.08] pt-4 text-[10px] sm:text-xs font-mono text-slate-500 uppercase tracking-widest"
+        >
+          {/* Central Scroll Cue */}
+          <div
+            onClick={() => document.querySelector('#about')?.scrollIntoView({ behavior: 'smooth' })}
+            className="flex items-center gap-2 text-slate-400 hover:text-white cursor-pointer transition-colors"
+          >
+            <span>SCROLL TO EXPLORE</span>
+            <motion.div
+              animate={shouldReduce ? {} : { y: [0, 4, 0] }}
+              transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
+              className="w-1.5 h-1.5 rounded-full bg-[#00BFFF]"
+            />
+          </div>
+        </motion.div>
+      </div>
     </section>
   );
 }

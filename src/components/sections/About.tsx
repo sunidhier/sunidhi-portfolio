@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { GraduationCap, Zap, MapPin, Briefcase, FlaskConical } from 'lucide-react';
+import { GraduationCap, Zap, MapPin, Briefcase, FlaskConical, Bot, BookOpen, School } from 'lucide-react';
 import SectionHeader from '../ui/SectionHeader';
 import { profile } from '../../data/profile';
 
@@ -178,25 +178,7 @@ export default function About() {
               </p>
             </div>
 
-            {/* Quick identity pills */}
-            <div className="flex flex-wrap gap-2">
-              {[
-                { label: '🎓 GSSSIETW, Class of 2027' },
-                { label: '🤖 AI Minor · IIT Ropar' },
-                { label: '✈️ Boeing India Intern' },
-                { label: '🎤 Speech AI Research' },
-                { label: '📌 Placement Coordinator' },
-              ].map((pill) => (
-                <span
-                  key={pill.label}
-                  className="text-xs px-3 py-1.5 rounded-full bg-[#1E2A42]/60 border border-[#1E2A42] text-slate-300 font-mono"
-                >
-                  {pill.label}
-                </span>
-              ))}
-            </div>
-
-            {/* Education card */}
+            {/* Education showcase card */}
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -204,28 +186,109 @@ export default function About() {
               transition={{ duration: 0.5, delay: 0.3 }}
               className="card-base p-5 card-hover"
             >
-              <div className="flex items-start gap-4 mb-3">
-                <div className="p-2 rounded-lg bg-[#00BFFF]/10 border border-[#00BFFF]/20 text-[#00BFFF] flex-shrink-0">
-                  <GraduationCap size={18} />
-                </div>
-                <div>
-                  <h3 className="text-white font-semibold text-sm">{profile.education.degree}</h3>
-                  <p className="text-slate-400 text-xs mt-0.5">{profile.education.institution}</p>
-                  <div className="flex flex-wrap gap-2 mt-2">
-                    <span className="text-xs font-mono bg-[#1E2A42]/60 text-slate-400 px-2 py-0.5 rounded-full border border-[#1E2A42]">
-                      CGPA: {profile.education.cgpa}
-                    </span>
-                    <span className="text-xs font-mono bg-[#1E2A42]/60 text-slate-400 px-2 py-0.5 rounded-full border border-[#1E2A42]">
-                      Class of {profile.education.graduationYear}
-                    </span>
+              <div className="flex items-center justify-between pb-3 mb-3.5 border-b border-[#1E2A42]">
+                <h3 className="text-white font-semibold text-xs font-mono uppercase tracking-wider flex items-center gap-2">
+                  <GraduationCap size={16} className="text-[#00BFFF]" />
+                  Education &amp; Qualifications
+                </h3>
+                <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">
+                  Academic Milestones
+                </span>
+              </div>
+
+              <div className="space-y-3">
+                {/* 1. B.Tech — Highlighted */}
+                <div className="p-3.5 rounded-xl bg-[#0D1120]/80 border border-[#00BFFF]/25 hover:border-[#00BFFF]/50 transition-all flex items-start gap-3.5 shadow-[0_0_20px_rgba(0,191,255,0.05)]">
+                  <div className="p-2.5 rounded-lg bg-[#00BFFF]/10 border border-[#00BFFF]/25 text-[#00BFFF] flex-shrink-0 mt-0.5">
+                    <GraduationCap size={18} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-wrap items-center justify-between gap-1.5">
+                      <h4 className="text-white font-semibold text-sm leading-tight">
+                        B.Tech, Computer Science Engineering
+                      </h4>
+                      <span className="text-xs font-mono font-medium bg-[#00BFFF]/10 text-[#00BFFF] px-2.5 py-0.5 rounded-full border border-[#00BFFF]/25">
+                        CGPA: 8.63 / 10
+                      </span>
+                    </div>
+                    <p className="text-slate-400 text-xs mt-1">GSSSIETW, Mysore</p>
+                    <div className="flex items-center gap-2 mt-1.5">
+                      <span className="text-[10px] font-mono bg-[#1E2A42]/60 text-slate-400 px-2 py-0.5 rounded-full border border-[#1E2A42]">
+                        Class of 2027
+                      </span>
+                      <span className="text-[10px] font-mono text-slate-500">2023 – 2027</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="pt-3 border-t border-[#1E2A42] flex items-start gap-3">
-                <div className="p-2 rounded-lg bg-[#8B5CF6]/10 border border-[#8B5CF6]/20 text-[#A78BFA] flex-shrink-0">
-                  <Zap size={14} />
+
+                {/* 2. AI Minor — Highlighted */}
+                <div className="p-3.5 rounded-xl bg-[#0D1120]/80 border border-[#8B5CF6]/25 hover:border-[#8B5CF6]/50 transition-all flex items-start gap-3.5 shadow-[0_0_20px_rgba(139,92,246,0.05)]">
+                  <div className="p-2.5 rounded-lg bg-[#8B5CF6]/10 border border-[#8B5CF6]/25 text-[#A78BFA] flex-shrink-0 mt-0.5">
+                    <Bot size={18} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-wrap items-center justify-between gap-1.5">
+                      <h4 className="text-white font-semibold text-sm leading-tight">
+                        Minor in Artificial Intelligence
+                      </h4>
+                      <span className="text-xs font-mono font-medium bg-[#8B5CF6]/10 text-[#A78BFA] px-2.5 py-0.5 rounded-full border border-[#8B5CF6]/25">
+                        Completed 2025–2026
+                      </span>
+                    </div>
+                    <p className="text-slate-400 text-xs mt-1">IIT Ropar with Masai School</p>
+                    <div className="flex items-center gap-2 mt-1.5">
+                      <span className="text-[10px] font-mono bg-[#8B5CF6]/10 text-[#A78BFA] px-2 py-0.5 rounded-full border border-[#8B5CF6]/20">
+                        AI &amp; ML Specialization
+                      </span>
+                    </div>
+                  </div>
                 </div>
-                <p className="text-slate-400 text-xs leading-relaxed">{profile.education.minor}</p>
+
+                {/* 3. Pre-University (Base PU College) */}
+                <div className="p-3.5 rounded-xl bg-[#0D1120]/80 border border-emerald-500/20 hover:border-emerald-500/45 transition-all flex items-start gap-3.5 shadow-[0_0_20px_rgba(16,185,129,0.04)]">
+                  <div className="p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 flex-shrink-0 mt-0.5">
+                    <BookOpen size={18} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-wrap items-center justify-between gap-1.5">
+                      <h4 className="text-white font-semibold text-sm leading-tight">
+                        Pre-University (PUC) — PCMC
+                      </h4>
+                      <span className="text-xs font-mono font-medium bg-emerald-500/10 text-emerald-400 px-2.5 py-0.5 rounded-full border border-emerald-500/25">
+                        81.5%
+                      </span>
+                    </div>
+                    <p className="text-slate-400 text-xs mt-1">Base PU College, Mysore</p>
+                    <div className="flex items-center gap-2 mt-1.5">
+                      <span className="text-[10px] font-mono bg-[#1E2A42]/60 text-slate-400 px-2 py-0.5 rounded-full border border-[#1E2A42]">
+                        Physics · Chemistry · Math · Computer Science
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 4. Schooling (KV Mysore) */}
+                <div className="p-3.5 rounded-xl bg-[#0D1120]/80 border border-amber-500/20 hover:border-amber-500/45 transition-all flex items-start gap-3.5 shadow-[0_0_20px_rgba(245,158,11,0.04)]">
+                  <div className="p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/25 text-amber-400 flex-shrink-0 mt-0.5">
+                    <School size={18} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-wrap items-center justify-between gap-1.5">
+                      <h4 className="text-white font-semibold text-sm leading-tight">
+                        Secondary School (SSLC / Class 10)
+                      </h4>
+                      <span className="text-xs font-mono font-medium bg-amber-500/10 text-amber-400 px-2.5 py-0.5 rounded-full border border-amber-500/25">
+                        85.5%
+                      </span>
+                    </div>
+                    <p className="text-slate-400 text-xs mt-1">Kendriya Vidyalaya, Mysore</p>
+                    <div className="flex items-center gap-2 mt-1.5">
+                      <span className="text-[10px] font-mono bg-[#1E2A42]/60 text-slate-400 px-2 py-0.5 rounded-full border border-[#1E2A42]">
+                        CBSE
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </motion.div>
 

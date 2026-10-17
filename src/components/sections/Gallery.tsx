@@ -41,7 +41,7 @@ function PhotoPlaceholder({
         className="absolute bottom-3 right-3 h-5 w-5 rounded-br-sm border-b-2 border-r-2"
         style={{ borderColor: `${accent}60` }}
       />
-      <span className="relative z-10 text-3xl">{emoji}</span>
+      <Images size={28} className="relative z-10 opacity-40" style={{ color: accent }} />
       <span
         className="relative z-10 text-center font-mono text-[10px] uppercase tracking-widest"
         style={{ color: `${accent}CC` }}
@@ -172,7 +172,6 @@ function Lightbox({
         {/* Modal header */}
         <div className="flex items-center justify-between gap-3 border-b border-[#1E2A42] px-5 py-3.5">
           <div className="flex min-w-0 items-center gap-2.5">
-            <span className="text-xl">{category.coverEmoji}</span>
             <div className="min-w-0">
               <p className="truncate text-sm font-semibold text-white">
                 {category.title}
@@ -393,8 +392,7 @@ function GalleryCoverCard({
 
       {/* Card footer */}
       <div className="p-4">
-        <div className="mb-1 flex items-center gap-2.5">
-          <span className="text-lg">{category.coverEmoji}</span>
+        <div className="mb-1">
           <h3 className="text-sm font-semibold text-white transition-colors group-hover:text-[#00BFFF]">
             {category.title}
           </h3>
